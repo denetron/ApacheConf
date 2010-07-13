@@ -37,7 +37,7 @@ module ApacheConf
       end
       
       def to_s
-        "#{@@directive} \"#{self.settings}\""
+        "#{self.directive} \"#{self.settings}\"\n"
       end
     end
   end

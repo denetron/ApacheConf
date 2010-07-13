@@ -52,7 +52,7 @@ module ApacheConf
       end
       
       def to_s
-        "#{self.directive} #{self.directive_value}"
+        "#{self.directive} #{self.directive_value}\n"
       end
     end
   end

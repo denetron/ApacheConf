@@ -42,7 +42,7 @@ module ApacheConf
       end
       
       def to_s
-        "#{self.directive} #{self.module_name} #{@@module_path}/#{self.module_file}"
+        "#{self.directive} #{self.module_name} #{@@module_path}/#{self.module_file}\n"
       end
       alias_method :configuration_line, :to_s
     end

@@ -38,7 +38,7 @@ module ApacheConf
       end
       
       def to_s
-        "#{@@directive} #{self.url} \"#{self.path}\""
+        "#{self.directive} #{self.url} \"#{self.path}\"\n"
       end
     end
   end

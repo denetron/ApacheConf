@@ -41,9 +41,9 @@ module ApacheConf
       end
       
       def to_s
-        "<#{self.context} #{boolean_choice}#{self.module_name}>" +
+        "<#{self.context} #{boolean_choice}#{self.module_name}>\n" +
         super +
-        "</#{self.context}>"
+        "</#{self.context}>\n"
       end
     end
   end

@@ -39,7 +39,7 @@ module ApacheConf
       end
       
       def to_s
-        "#{@@directive} #{self.path} #{self.redirect_to}"
+        "#{self.directive} #{self.path} #{self.redirect_to}\n"
       end
     end
   end

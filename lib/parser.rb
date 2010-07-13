@@ -54,6 +54,8 @@ module ApacheConf
         
         self.index += 1
       end
+      
+      true
     end
     
     def parse_context(root = false)
@@ -69,6 +71,16 @@ module ApacheConf
       
       self.index += 1
       self.parse_context
+    end
+    
+    def generate_config
+      output = ""
+      
+      for config_object in self.config_objects
+        output += config_object.to_s
+      end
+      
+      output
     end
     
     def self.load(configuration_file)

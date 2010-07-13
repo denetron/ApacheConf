@@ -38,9 +38,9 @@ module ApacheConf
       end
       
       def to_s
-        "<#{self.context} #{self.settings}>" +
+        "<#{self.context} #{self.settings}>\n" +
         super +
-        "</#{self.context}>"
+        "</#{self.context}>\n"
       end
     end
   end

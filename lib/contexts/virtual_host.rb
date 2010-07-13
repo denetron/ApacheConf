@@ -41,9 +41,9 @@ module ApacheConf
       end
       
       def to_s
-        "<#{self.context} #{self.ip_address}:#{self.port}>" +
+        "<#{self.context} #{self.ip_address}:#{self.port}>\n" +
         super +
-        "</#{self.context}>"
+        "</#{self.context}>\n"
       end
     end
   end

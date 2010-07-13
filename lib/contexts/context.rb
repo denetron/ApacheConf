@@ -73,6 +73,8 @@ module ApacheConf
         for sub_context in self.sub_contexts
           output += sub_context.to_s
         end
+        
+        output
       end
     end
   end

@@ -36,9 +36,9 @@ module ApacheConf
       end
       
       def to_s
-        "<#{self.context} #{self.path}>" +
+        "<#{self.context} #{self.path}>\n" +
         super +
-        "</#{self.context}>"
+        "</#{self.context}>\n"
       end
     end
   end
