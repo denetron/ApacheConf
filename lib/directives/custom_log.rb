@@ -33,11 +33,11 @@ module ApacheConf
       def self.parse(line)
         line = line.strip
         
-        self.new(:settings => line.chomp.split(" ")[1..-1])
+        self.new(:settings => line.chomp.split(" ")[1..-1].join(" "))
       end
       
       def to_s
-        "#{self.directive} \"#{self.settings}\"\n"
+        "#{self.directive} #{self.settings}\n"
       end
     end
   end

@@ -38,7 +38,7 @@ module ApacheConf
       end
       
       def to_s
-        "#{self.directive} #{self.url} \"#{self.path}\"\n"
+        "#{self.directive} #{self.url} \"#{self.path.gsub("\"", "")}\"\n"
       end
     end
   end

@@ -73,6 +73,18 @@ module ApacheConf
       self.parse_context
     end
     
+    def find(what, name)
+      objects = Array.new
+      
+      for obj in self.config_objects
+        if obj.is_a?(name)
+          objects.push(obj)
+        end
+      end
+      
+      objects
+    end
+    
     def generate_config
       output = ""
       

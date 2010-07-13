@@ -21,7 +21,7 @@
 
 module ApacheConf
   module Directives
-    class AcceptFilter < Directive
+    class CBandUser < Directive
       @settings = ""
       
       attr_accessor :settings
@@ -33,7 +33,7 @@ module ApacheConf
       def self.parse(line)
         line = line.strip
         
-        self.new(:settings => line.chomp.split(" ")[1..2].join(" "))
+        self.new(:settings => line.chomp.split(" ").last)
       end
       
       def to_s

@@ -37,7 +37,7 @@ module ApacheConf
       end
       
       def to_s
-        "#{self.directive} \"#{self.name}\"\n"
+        "#{self.directive} \"#{self.name.gsub("\"", "")}\"\n"
       end
     end
   end

@@ -21,23 +21,25 @@
 
 module ApacheConf
   module Directives
-    class AcceptFilter < Directive
-      @settings = ""
+    class RewriteRule < Directive
+      @rule = ""
+      @todo = ""
       
-      attr_accessor :settings
+      attr_accessor :rule, :todo
       
       def initialize(options = {})
-        self.settings = options[:settings]
+        self.rule = options[:rule]
+        self.todo = options[:todo]
       end
       
       def self.parse(line)
         line = line.strip
         
-        self.new(:settings => line.chomp.split(" ")[1..2].join(" "))
+        self.new(:rule => line.chomp.split(" ")[1], :todo => line.chomp.split(" ").last)
       end
       
       def to_s
-        "#{self.directive} #{self.settings}\n"
+        "#{self.directive} #{self.rule} #{self.todo}\n"
       end
     end
   end

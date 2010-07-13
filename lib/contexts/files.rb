@@ -20,24 +20,25 @@
 # THE SOFTWARE.
 
 module ApacheConf
-  module Directives
-    class AcceptFilter < Directive
-      @settings = ""
+  module Contexts
+    class Files < Context
+      @path  = ""
       
-      attr_accessor :settings
+      attr_accessor :path
       
       def initialize(options = {})
-        self.settings = options[:settings]
+        self.path = options[:path]
+        super()
       end
       
       def self.parse(line)
-        line = line.strip
-        
-        self.new(:settings => line.chomp.split(" ")[1..2].join(" "))
+        self.new(:path => line.chomp.split(" ").last.gsub(">", ""))
       end
       
       def to_s
-        "#{self.directive} #{self.settings}\n"
+        "<#{self.context} #{self.path}>\n" +
+        super +
+        "</#{self.context}>\n"
       end
     end
   end
