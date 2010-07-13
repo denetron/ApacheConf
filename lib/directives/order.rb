@@ -19,9 +19,26 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-require 'lib/directives/directive.rb'
-Dir["lib/*/*.rb"].each {|file| require file }
-require 'lib/parser.rb'
-
 module ApacheConf
+  module Directives
+    class Order < Directive
+      @settings = ""
+      
+      attr_accessor :settings
+      
+      def initialize(options = {})
+        self.settings = options[:settings]
+      end
+      
+      def self.parse(line)
+        line = line.strip
+        
+        self.new(:settings => line.chomp.split(" ").last)
+      end
+      
+      def to_s
+        "#{@@directive} \"#{self.settings}\""
+      end
+    end
+  end
 end

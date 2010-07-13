@@ -19,9 +19,26 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-require 'lib/directives/directive.rb'
-Dir["lib/*/*.rb"].each {|file| require file }
-require 'lib/parser.rb'
-
 module ApacheConf
+  module Directives
+    class ServerAdmin < Directive
+      @email = ""
+      
+      attr_accessor :email
+      
+      def initialize(options = {})
+        self.email = options[:email]
+      end
+      
+      def self.parse(line)
+        line = line.strip
+        
+        self.new(:email => line.chomp.split(" ").last)
+      end
+      
+      def to_s
+        "#{@@directive} \"#{self.email}\""
+      end
+    end
+  end
 end

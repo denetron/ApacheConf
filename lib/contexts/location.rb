@@ -19,9 +19,27 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-require 'lib/directives/directive.rb'
-Dir["lib/*/*.rb"].each {|file| require file }
-require 'lib/parser.rb'
-
 module ApacheConf
+  module Contexts
+    class Location < Context
+      @path  = ""
+      
+      attr_accessor :path
+      
+      def initialize(options = {})
+        self.path = options[:path]
+        super()
+      end
+      
+      def self.parse(line)
+        self.new(:path => line.chomp.split(" ").last.gsub(">", ""))
+      end
+      
+      def to_s
+        "<#{self.context} #{self.path}>" +
+        super +
+        "</#{self.context}>"
+      end
+    end
+  end
 end

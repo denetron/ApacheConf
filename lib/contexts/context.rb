@@ -64,7 +64,15 @@ module ApacheConf
       end
       
       def to_s
-        ""
+        output = ""
+        
+        for directive in self.directives
+          output += directive.to_s
+        end
+        
+        for sub_context in self.sub_contexts
+          output += sub_context.to_s
+        end
       end
     end
   end

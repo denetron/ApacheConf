@@ -19,9 +19,27 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-require 'lib/directives/directive.rb'
-Dir["lib/*/*.rb"].each {|file| require file }
-require 'lib/parser.rb'
-
 module ApacheConf
+  module Directives
+    class ScriptAlias < Directive
+      @url, @path = "", ""
+      
+      attr_accessor :url, :path
+      
+      def initialize(options = {})
+        self.url = options[:url]
+        self.path = options[:path]
+      end
+      
+      def self.parse(line)
+        line = line.strip
+        
+        self.new(:url => line.chomp.split(" ")[1], :path => line.chomp.split(" ")[2])
+      end
+      
+      def to_s
+        "#{@@directive} #{self.url} \"#{self.path}\""
+      end
+    end
+  end
 end

@@ -34,7 +34,7 @@ module ApacheConf
       self.config_line_array, self.config_objects = Array.new, Array.new
       
       for line in config
-        unless line[0] == 35 || line == "" # comment hash mark, or line is blank, ignore
+        unless line.strip[0] == 35 || line == "" # comment hash mark, or line is blank, ignore
           self.config_line_array.push(line)
         end
       end
