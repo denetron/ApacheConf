@@ -20,18 +20,30 @@
 # THE SOFTWARE.
 
 module ApacheConf
-  module Directives
-    class Directive
-      def self.directive
-        name.split("::").last
+  module Contexts
+    class IfModule < Context
+      @module_name  = ""
+      @negate       = false
+      
+      attr_accessor :module_name, :negate
+      
+      def initialize(options = {})
+        self.module_name, self.negate = options[:module_name], options[:negate]
+        super()
       end
       
-      def self.load_directive(name)
-        ::ApacheConf::Directives.const_get("#{name.chomp.strip.split(' ').first}")
+      def self.parse(line)
+        self.new(:module_name => line.chomp.split(" ").last.gsub("!", "").gsub(">", ""), :negate => !!line.chomp.index("!"))
       end
       
-      def directive
-        self.class.name.split("::").last
+      def boolean_choice
+        self.negate ? "!" : ""
+      end
+      
+      def to_s
+        "<#{self.context} #{boolean_choice}#{self.module_name}>" +
+        super +
+        "</#{self.context}>"
       end
     end
   end

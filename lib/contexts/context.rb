@@ -20,18 +20,51 @@
 # THE SOFTWARE.
 
 module ApacheConf
-  module Directives
-    class Directive
-      def self.directive
-        name.split("::").last
+  module Contexts
+    class InvalidContextSyntax < RuntimeError; end
+    
+    class Context
+      class << self # Singleton methods to test if we hit a context stanza
+        def start_of_context?(line)
+          !!(line.strip.chomp[0] == 60 && line.strip.chomp[1] != 47) # <
+        end
+        
+        def end_of_context?(line)
+          !!(line.strip.chomp[0] == 60 && line.strip.chomp[1] == 47) # </
+        end
+        
+        def context_name?(line)
+          line.chomp.strip.split("<").last.chomp.strip.split(" ").first
+          
+        rescue NoMethodError
+          raise InvalidContextSyntax, "Context name could not be found within brackets"
+        end
+        
+        def context
+          name.split("::").last
+        end
+        
+        def load_context(name)
+          ::ApacheConf::Contexts.const_get("#{name.chomp.strip.split('<').last.split(' ').first}")
+        end
       end
       
-      def self.load_directive(name)
-        ::ApacheConf::Directives.const_get("#{name.chomp.strip.split(' ').first}")
+      @sub_contexts = []
+      @directives = []
+      
+      attr_accessor :sub_contexts, :directives
+      
+      def initialize
+        self.sub_contexts = Array.new
+        self.directives = Array.new
       end
       
-      def directive
+      def context
         self.class.name.split("::").last
+      end
+      
+      def to_s
+        ""
       end
     end
   end
