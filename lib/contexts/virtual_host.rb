@@ -20,24 +20,30 @@
 # THE SOFTWARE.
 
 module ApacheConf
-  module Directives
-    class AcceptFilter < Directive
-      @settings = ""
+  module Contexts
+    class VirtualHost < Context
+      @ip_address = ""
+      @port       = ""
       
-      attr_accessor :settings
+      attr_accessor :ip_address, :port
       
       def initialize(options = {})
-        self.settings = options[:settings]
+        self.ip_address = options[:ip_address]
+        self.port       = options[:port]
+        super()
       end
       
       def self.parse(line)
         line = line.strip
         
-        self.new(:settings => line.chomp.split(" ")[1..2].join(" "))
+        ip_address, port = line.chomp.split(" ")[1].split(":")
+        self.new(:ip_address => ip_address, :port => port.gsub(">", ""))
       end
       
       def to_s
-        "#{@@directive} \"#{self.settings}\""
+        "<#{self.context} #{self.ip_address}:#{self.port}>" +
+        super +
+        "</#{self.context}>"
       end
     end
   end

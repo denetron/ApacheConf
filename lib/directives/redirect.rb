@@ -21,23 +21,25 @@
 
 module ApacheConf
   module Directives
-    class AcceptFilter < Directive
-      @settings = ""
+    class Redirect < Directive
+      @path = ""
+      @redirect_to = ""
       
-      attr_accessor :settings
+      attr_accessor :path, :redirect_to
       
       def initialize(options = {})
-        self.settings = options[:settings]
+        self.path = options[:path]
+        self.redirect_to = options[:redirect_to]
       end
       
       def self.parse(line)
         line = line.strip
         
-        self.new(:settings => line.chomp.split(" ")[1..2].join(" "))
+        self.new(:path => line.chomp.split(" ")[1], :redirect_to => line.chomp.split(" ")[2])
       end
       
       def to_s
-        "#{@@directive} \"#{self.settings}\""
+        "#{@@directive} #{self.path} #{self.redirect_to}"
       end
     end
   end

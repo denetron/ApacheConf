@@ -21,23 +21,23 @@
 
 module ApacheConf
   module Directives
-    class AcceptFilter < Directive
-      @settings = ""
+    class SSLCertificateKeyFile < Directive
+      @path = ""
       
-      attr_accessor :settings
+      attr_accessor :path
       
       def initialize(options = {})
-        self.settings = options[:settings]
+        self.path = options[:path]
       end
       
       def self.parse(line)
         line = line.strip
         
-        self.new(:settings => line.chomp.split(" ")[1..2].join(" "))
+        self.new(:path => line.chomp.split(" ").last)
       end
       
       def to_s
-        "#{@@directive} \"#{self.settings}\""
+        "#{@@directive} \"#{self.path}\""
       end
     end
   end

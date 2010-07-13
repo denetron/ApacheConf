@@ -21,23 +21,23 @@
 
 module ApacheConf
   module Directives
-    class AcceptFilter < Directive
-      @settings = ""
+    class AuthName < Directive
+      @name = ""
       
-      attr_accessor :settings
+      attr_accessor :name
       
       def initialize(options = {})
-        self.settings = options[:settings]
+        self.name = options[:name]
       end
       
       def self.parse(line)
         line = line.strip
         
-        self.new(:settings => line.chomp.split(" ")[1..2].join(" "))
+        self.new(:name => line.chomp.split(" ").last)
       end
       
       def to_s
-        "#{@@directive} \"#{self.settings}\""
+        "#{@@directive} \"#{self.name}\""
       end
     end
   end

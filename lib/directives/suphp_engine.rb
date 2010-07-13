@@ -39,6 +39,14 @@ module ApacheConf
       def to_s
         "#{@@directive} \"#{self.settings}\""
       end
+      
+      def self.directive
+        "suPHPEngine"
+      end
+      
+      def directive
+        "suPHPEngine"
+      end
     end
   end
 end
