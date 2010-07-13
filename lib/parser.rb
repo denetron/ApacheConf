@@ -47,24 +47,17 @@ module ApacheConf
         line = self.config_line_array[self.index].strip
         
         if Contexts::Context::start_of_context?(line)
-          puts "Start of a context" 
           self.parse_context(true)
         elsif !Contexts::Context::end_of_context?(line) # if it isn't the start of a context stanza, it must be a directive
           self.config_objects.push(Directives::Directive::load_directive(line).parse(line))
-          puts "Directive: #{self.config_objects.last}"
         end
-        
         
         self.index += 1
       end
-      
-      puts self.config_objects.inspect
     end
     
     def parse_context(root = false)
-      puts "Starting at #{self.index}"
       line = self.config_line_array[self.index]
-      puts "#{line.strip}"
       
       self.index += 1 && return if line.nil?
       self.index += 1 && return if Contexts::Context::end_of_context?(line)
@@ -72,7 +65,6 @@ module ApacheConf
       self.config_objects.push(Contexts::Context::load_context(line).parse(line)) if Contexts::Context::start_of_context?(line) && root
       self.config_objects.last.sub_contexts.push(Contexts::Context::load_context(line).parse(line)) if Contexts::Context::start_of_context?(line) && !root
       
-      puts "#{Directives::Directive::load_directive(line).parse(line)}" unless Contexts::Context::start_of_context?(line)
       (self.config_objects.last.sub_contexts.last || self.config_objects.last).directives.push(Directives::Directive::load_directive(line).parse(line)) unless Contexts::Context::start_of_context?(line)
       
       self.index += 1
