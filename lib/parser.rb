@@ -73,7 +73,7 @@ module ApacheConf
       self.config_objects.last.sub_contexts.push(Contexts::Context::load_context(line).parse(line)) if Contexts::Context::start_of_context?(line) && !root
       
       puts "#{Directives::Directive::load_directive(line).parse(line)}" unless Contexts::Context::start_of_context?(line)
-      self.config_objects.last.directives.push(Directives::Directive::load_directive(line).parse(line)) unless Contexts::Context::start_of_context?(line)
+      (self.config_objects.last.sub_contexts.last || self.config_objects.last).directives.push(Directives::Directive::load_directive(line).parse(line)) unless Contexts::Context::start_of_context?(line)
       
       self.index += 1
       self.parse_context
