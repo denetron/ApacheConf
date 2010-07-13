@@ -23,23 +23,23 @@ module ApacheConf
   module Directives
     class RewriteRule < Directive
       @rule = ""
-      @todo = ""
+      @action = ""
       
-      attr_accessor :rule, :todo
+      attr_accessor :rule, :action
       
       def initialize(options = {})
         self.rule = options[:rule]
-        self.todo = options[:todo]
+        self.action = options[:action]
       end
       
       def self.parse(line)
         line = line.strip
         
-        self.new(:rule => line.chomp.split(" ")[1], :todo => line.chomp.split(" ").last)
+        self.new(:rule => line.chomp.split(" ")[1], :action => line.chomp.split(" ").last)
       end
       
       def to_s
-        "#{self.directive} #{self.rule} #{self.todo}\n"
+        "#{self.directive} #{self.rule} #{self.action}\n"
       end
     end
   end
