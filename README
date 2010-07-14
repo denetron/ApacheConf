@@ -1,0 +1,12 @@
+This is a ruby based parser to load and write Apache configuration files, allowing you to utilize Ruby objects to modify the configuration.
+
+Some examples:
+Just load a configuration file and write out the ApacheConf generated one to another file:
+require 'init'
+config = ApacheConf::Parser.load(File.read("test.conf"))
+File.open("output.conf", "w") { |f| f.write(config.generate_config) }
+
+Load a configuration file and remove the last line in the configuration file:
+require 'init'
+config = ApacheConf::Parser.load(File.read("test.conf"))
+config.config_objects.pop
