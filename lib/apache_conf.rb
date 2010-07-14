@@ -21,6 +21,7 @@
 
 require 'lib/directives/directive.rb'
 Dir["lib/*/*.rb"].each {|file| require file }
+Dir["lib/*/*/*.rb"].each {|file| require file }
 require 'lib/parser.rb'
 
 module ApacheConf
